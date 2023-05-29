@@ -6,6 +6,7 @@ function App() {
     <div className="App">
       <h1>React Application</h1>
       <button className='btn btn-primary'>Hello</button>
+      <button className='btn btn-primary'>Hello</button>
     </div>
   );
 }
