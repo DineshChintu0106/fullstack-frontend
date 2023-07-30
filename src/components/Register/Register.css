@@ -1,0 +1,36 @@
+.register-container {
+    background-image: url("https://media.istockphoto.com/id/1182243859/photo/parsley-olive-oil-and-garlic-copy-space.jpg?s=612x612&w=0&k=20&c=nCR6OD_QCzrzMWPcWh3bxLyGBYddVWfBc2XU-2Ub7WY=");
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-left: 100px;
+}
+
+.form-register {
+    background-color: transparent;
+    backdrop-filter: blur(25px);
+    color: white;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    border-radius: 10px;
+}
+
+.input-field {
+    width: 80%;
+    background-color: transparent;
+    height: 40px;
+    color: white;
+}
+.input-field::placeholder{
+    color: white;
+}
+.input-field:focus{
+    border-color: red;
+}
+.input-field:hover{
+    border-color: red;
+}
