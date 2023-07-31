@@ -24,6 +24,7 @@
     background-color: transparent;
     height: 40px;
     color: white;
+    outline: none;
 }
 .input-field::placeholder{
     color: white;
