@@ -10,7 +10,7 @@ export default function Register() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [address, setAddress] = useState('')
-  const [number, setNumber] = useState('')
+  const [mobile, setMobile] = useState('')
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState('')
 
@@ -23,7 +23,7 @@ export default function Register() {
       email,
       password,
       address,
-      number
+      mobile
     }
     axios.post("http://localhost:4000/api/data", data).then((res) => {
       console.log(res)
@@ -34,12 +34,12 @@ export default function Register() {
       setEmail('')
       setPassword('')
       setAddress('')
-      setNumber("")
+      setMobile("")
     }).catch(err => console.log(err))
   }
   return (
     <div className='register-container'>
-      <form className='form-register col-lg-4 col-md-8 col-sm-10 col-xs-10' onSubmit={handleClick}>
+      <form className='form-register' onSubmit={handleClick}>
         <h1>Sign UP</h1>
         <TextField id="username" type='text' label="Username" variant="standard" InputProps={{
           style: {
@@ -65,7 +65,7 @@ export default function Register() {
             color: 'white',
             borderBottom: '2px solid white',
           }
-        }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setNumber(e.target.value) }} value={number} />
+        }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setMobile(e.target.value) }} value={mobile} />
         <TextField id="adderss" type='text' label="Address" variant="standard" InputProps={{
           style: {
             color: 'white',

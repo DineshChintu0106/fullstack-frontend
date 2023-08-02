@@ -26,12 +26,28 @@
     color: white;
     outline: none;
 }
-.input-field::placeholder{
+
+.input-field::placeholder {
     color: white;
 }
-.input-field:focus{
+
+.input-field:focus {
     border-color: red;
 }
-.input-field:hover{
+
+.input-field:hover {
     border-color: red;
+}
+
+
+@media (max-width: 576px) {
+    .register-container {
+        /* background-image: url("https://media.istockphoto.com/id/1182243859/photo/parsley-olive-oil-and-garlic-copy-space.jpg?s=612x612&w=0&k=20&c=nCR6OD_QCzrzMWPcWh3bxLyGBYddVWfBc2XU-2Ub7WY="); */
+        background-size: cover;
+        background-color: black;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
