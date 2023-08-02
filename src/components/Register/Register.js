@@ -9,8 +9,13 @@ export default function Register() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [address, setAddress] = useState('')
   const [mobile, setMobile] = useState('')
+  const [altMobile, setAltMobile] = useState('')
+  const [doorNo, setDoorNo] = useState('')
+  const [street, setStreet] = useState('')
+  const [mandal, setMandal] = useState('')
+  const [city, setCity] = useState('')
+  const [pincode, setPincode] = useState('')
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState('')
 
@@ -22,9 +27,15 @@ export default function Register() {
       username,
       email,
       password,
-      address,
-      mobile
+      mobile,
+      altMobile,
+      doorNo,
+      street,
+      mandal,
+      city,
+      pincode
     }
+    console.log(data)
     axios.post("http://localhost:4000/api/data", data).then((res) => {
       console.log(res)
     }).then(() => {
@@ -33,8 +44,13 @@ export default function Register() {
       setUsername('')
       setEmail('')
       setPassword('')
-      setAddress('')
+      setAltMobile('')
       setMobile("")
+      setDoorNo('')
+      setStreet('')
+      setMandal('')
+      setCity('')
+      setPincode('')
     }).catch(err => console.log(err))
   }
   return (
@@ -73,7 +89,7 @@ export default function Register() {
                 color: 'white',
                 borderBottom: '2px solid white',
               }
-            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setAddress(e.target.value) }} value={address} />
+            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setAltMobile(e.target.value) }} value={altMobile} />
           </div>
           <div className='d-flex flex-column gap-3 align-items-center' style={{ width: '100%' }}>
             <TextField id="DrNo" type='text' label="Door No" variant="standard" InputProps={{
@@ -81,32 +97,32 @@ export default function Register() {
                 color: 'white',
                 borderBottom: '2px solid white'
               }
-            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setUsername(e.target.value) }} value={username} />
+            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setDoorNo(e.target.value) }} value={doorNo} />
             <TextField id="Street" type='text' label="Street Name" variant="standard" InputProps={{
               style: {
                 color: 'white',
                 borderBottom: '2px solid white'
               }
-            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setEmail(e.target.value) }} value={email}
+            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setStreet(e.target.value) }} value={street}
             />
             <TextField id="Mandal" type='text' label="Mandal" variant="standard" InputProps={{
               style: {
                 color: 'white',
                 borderBottom: '2px solid white'
               }
-            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setPassword(e.target.value) }} value={password} />
+            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setMandal(e.target.value) }} value={mandal} />
             <TextField id="City" type='text' label="City" variant="standard" InputProps={{
               style: {
                 color: 'white',
                 borderBottom: '2px solid white',
               }
-            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setAddress(e.target.value) }} value={address} />
+            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setCity(e.target.value) }} value={city} />
             <TextField id="Pincode" type='number' label="Pincode" variant="standard" InputProps={{
               style: {
                 color: 'white',
                 borderBottom: '2px solid white',
               }
-            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setMobile(e.target.value) }} value={mobile} />
+            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setPincode(e.target.value) }} value={pincode} />
 
           </div>
         </div>
