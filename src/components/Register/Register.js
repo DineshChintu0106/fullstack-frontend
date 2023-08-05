@@ -18,6 +18,7 @@ export default function Register() {
   const [pincode, setPincode] = useState('')
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState('')
+  const [error, setError] = useState('')
 
 
   const handleClick = (e) => {
@@ -35,12 +36,10 @@ export default function Register() {
       city,
       pincode
     }
-    console.log(data)
-    axios.post("http://localhost:4000/api/data", data).then((res) => {
-      console.log(res)
+    axios.post("http://localhost:4000/register", data).then((res) => {
+      setSuccess("Registerd successfully")
     }).then(() => {
       setLoading(false)
-      setSuccess("Registerd successfully")
       setUsername('')
       setEmail('')
       setPassword('')
@@ -51,7 +50,12 @@ export default function Register() {
       setMandal('')
       setCity('')
       setPincode('')
-    }).catch(err => console.log(err))
+    }).catch(err => {
+      if (err.response.status === 409) {
+        setError(err.response.data)
+        setLoading(false)
+      }
+    })
   }
   return (
     <div className='register-container'>
@@ -64,32 +68,52 @@ export default function Register() {
                 color: 'white',
                 borderBottom: '2px solid white'
               }
-            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setUsername(e.target.value) }} value={username} />
+            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => {
+              setUsername(e.target.value)
+              setError('')
+              setSuccess('')
+            }} value={username} />
             <TextField id="email" type='email' label="Email" variant="standard" InputProps={{
               style: {
                 color: 'white',
                 borderBottom: '2px solid white'
               }
-            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setEmail(e.target.value) }} value={email}
+            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => {
+              setEmail(e.target.value)
+              setError('')
+              setSuccess('')
+            }} value={email}
             />
             <TextField id="password" type='password' label="Password" variant="standard" InputProps={{
               style: {
                 color: 'white',
                 borderBottom: '2px solid white'
               }
-            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setPassword(e.target.value) }} value={password} />
-            <TextField id="mobile" type='number' label="Mobile" variant="standard" InputProps={{
+            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => {
+              setPassword(e.target.value)
+              setError('')
+              setSuccess('')
+            }} value={password} />
+            <TextField id="mobile" type='tel' label="Mobile" variant="standard" InputProps={{
               style: {
                 color: 'white',
                 borderBottom: '2px solid white',
               }
-            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setMobile(e.target.value) }} value={mobile} />
+            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => {
+              setMobile(e.target.value)
+              setError('')
+              setSuccess('')
+            }} value={mobile} />
             <TextField id="AltMobile" type='text' label="Alternate Mobile" variant="standard" InputProps={{
               style: {
                 color: 'white',
                 borderBottom: '2px solid white',
               }
-            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setAltMobile(e.target.value) }} value={altMobile} />
+            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => {
+              setAltMobile(e.target.value)
+              setError('')
+              setSuccess('')
+            }} value={altMobile} />
           </div>
           <div className='d-flex flex-column gap-3 align-items-center' style={{ width: '100%' }}>
             <TextField id="DrNo" type='text' label="Door No" variant="standard" InputProps={{
@@ -97,38 +121,59 @@ export default function Register() {
                 color: 'white',
                 borderBottom: '2px solid white'
               }
-            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setDoorNo(e.target.value) }} value={doorNo} />
+            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => {
+              setDoorNo(e.target.value)
+              setError('')
+              setSuccess('')
+            }} value={doorNo} />
             <TextField id="Street" type='text' label="Street Name" variant="standard" InputProps={{
               style: {
                 color: 'white',
                 borderBottom: '2px solid white'
               }
-            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setStreet(e.target.value) }} value={street}
+            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => {
+              setStreet(e.target.value)
+              setError('')
+              setSuccess('')
+            }} value={street}
             />
             <TextField id="Mandal" type='text' label="Mandal" variant="standard" InputProps={{
               style: {
                 color: 'white',
                 borderBottom: '2px solid white'
               }
-            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setMandal(e.target.value) }} value={mandal} />
+            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => {
+              setMandal(e.target.value)
+              setError('')
+              setSuccess('')
+            }} value={mandal} />
             <TextField id="City" type='text' label="City" variant="standard" InputProps={{
               style: {
                 color: 'white',
                 borderBottom: '2px solid white',
               }
-            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setCity(e.target.value) }} value={city} />
+            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => {
+              setCity(e.target.value)
+              setError('')
+              setSuccess('')
+            }} value={city} />
             <TextField id="Pincode" type='number' label="Pincode" variant="standard" InputProps={{
               style: {
                 color: 'white',
                 borderBottom: '2px solid white',
               }
-            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => { setPincode(e.target.value) }} value={pincode} />
+            }} InputLabelProps={{ style: { color: 'white' } }} className='input-field' onChange={(e) => {
+              setPincode(e.target.value)
+              setError('')
+              setSuccess('')
+            }} value={pincode} />
 
           </div>
         </div>
 
 
-        {success.length > 0 && <strong className='text-success'>{success}<Link to={'/login'}>login</Link> to continre</strong>}
+        {success.length > 0 && <strong className='text-success'>{success}<Link to={'/login'}>login</Link> to continue</strong>}
+        {error.length > 0 && <strong className='text-danger'>{error}</strong>}
         <button type='submit' className='btn btn-light mt-3' style={{ backgroundColor: 'white' }}>{loading ? "loading..." : "Submit"}</button>
       </form>
     </div>

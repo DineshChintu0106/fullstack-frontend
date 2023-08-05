@@ -62,6 +62,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        background-image: url("https://img.freepik.com/free-photo/flat-lay-tomato-salad-with-feta-cheese-rucola-copy-space_23-2148700403.jpg?size=626&ext=jpg&ga=GA1.1.401499726.1688356903&semt=ais");
+        background-size: cover;
     }
 
 }
@@ -71,8 +73,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        
+        background-image: url("https://img.freepik.com/free-photo/flat-lay-tomato-salad-with-feta-cheese-rucola-copy-space_23-2148700403.jpg?size=626&ext=jpg&ga=GA1.1.401499726.1688356903&semt=ais");
+        background-size: cover;
     }
+
     .form-register {
         background-color: transparent;
         backdrop-filter: blur(25px);
