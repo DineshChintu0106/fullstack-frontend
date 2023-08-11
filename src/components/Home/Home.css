@@ -1,0 +1,34 @@
+.dropdown-home {
+    position: relative;
+    width: 15%;
+}
+
+.navbar-top {
+    box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+    padding: 10px;
+}
+
+.icons-home {
+    position: absolute;
+    top: 20%;
+    right: 10px;
+}
+
+.form-search {
+    width: 30%;
+}
+
+.restaurant-cards {
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.image-card {
+    height: 200px;
+    width: 300px;
+    border-radius: 10px;
+}

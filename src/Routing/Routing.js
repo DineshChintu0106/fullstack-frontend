@@ -9,7 +9,7 @@ export default function Routing() {
     return (
         <div>
             <Routes>
-                <Route path='/login' element={<Login />} />
+                <Route path='/login' element={<Login name="dinesh" />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/home' element={<Home/>}/>
             </Routes>

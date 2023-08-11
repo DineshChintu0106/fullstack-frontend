@@ -170,7 +170,7 @@ export default function Register() {
 
           </div>
         </div>
-
+        <p style={{width:'90%',textAlign:"end",marginTop:'10px'}}>Already have an account <Link to={'/login'}>Login</Link> here</p>
 
         {success.length > 0 && <strong className='text-success'>{success}<Link to={'/login'}>login</Link> to continue</strong>}
         {error.length > 0 && <strong className='text-danger'>{error}</strong>}
