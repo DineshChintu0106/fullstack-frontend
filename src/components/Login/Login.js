@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Login.css'
 import { TextField } from '@mui/material'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 export default function Login(props) {
 
   const navigate = useNavigate()
+
 
   const [mobile, setMobile] = useState('')
   const [password, setPassword] = useState('')
@@ -21,7 +23,10 @@ export default function Login(props) {
     axios.post('http://localhost:4000/login', data).then((res) => {
       console.log(res)
       if (res.statusText === "OK") {
-        navigate('/home',{replace:true})
+        console.log(res)
+        const jwt = res.data.token
+        Cookies.set('jwt_token', jwt, { expires: 1 })
+        navigate('/home', { replace: true })
       }
     }).catch((err) => {
       console.log(err.response.data.message)
@@ -35,6 +40,17 @@ export default function Login(props) {
 
     })
   }
+
+  useEffect(() => {
+    const token = Cookies.get("jwt_token")
+    if (!token) {
+      navigate('/login')
+    }
+    else {
+      navigate('/home')
+    }
+  },[])
+
 
   return (
     <div className='home-container'>

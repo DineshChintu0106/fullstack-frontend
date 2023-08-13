@@ -2,10 +2,15 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import '../Home/Home.css'
 import * as Icon from 'react-bootstrap-icons'
+import {Link, redirect} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 export default function Home() {
 
   const [restaurants, setRestaurants] = useState([])
+  
+  const navigate = useNavigate()
 
   const fetchData = async () => {
     try {
@@ -18,8 +23,16 @@ export default function Home() {
 
   }
 
+  const handleClick = (id) => {
+    navigate(`/restaurant/${id}`)
+  }
+
   useEffect(() => {
     fetchData()
+    const token = Cookies.get("jwt_token")
+    if (!token) {
+      navigate('/login')
+    }
   }, [])
 
   return (
@@ -37,7 +50,7 @@ export default function Home() {
         </div>
         <div className='d-flex gap-5'>
           <Icon.Cart height={30} width={30}/>
-          <Icon.PersonCircle  height={30} width={30}/>
+         <Link to={'/profile'} className='text-dark'><Icon.PersonCircle  height={30} width={30}/></Link> 
         </div>
 
 
@@ -45,8 +58,8 @@ export default function Home() {
       <div className='d-flex flex-wrap justify-content-center gap-5 pt-4 pb-4'>
         {restaurants.map((each) => {
           return (
-            <div key={each._id} className='restaurant-cards'>
-              <img src='https://www.washingtonian.com/wp-content/uploads/2019/06/unnamed-1-2048x1365.jpg' alt={each.Name} className='image-card' />
+            <div key={each._id} className='restaurant-cards' onClick={() => {handleClick(each._id)}}>
+              <img src={each.imageUrl} alt={each.Name} className='image-card' />
               <h5>{each.Name}</h5>
             </div>
           )
