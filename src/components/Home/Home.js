@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import '../Home/Home.css'
 import * as Icon from 'react-bootstrap-icons'
-import {Link, redirect} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
 export default function Home() {
 
   const [restaurants, setRestaurants] = useState([])
+  const [filtered,setFiltered] = useState(restaurants)
+  const [search,setSearch] = useState('')
+  const [message,setMessage] = useState('')
   
   const navigate = useNavigate()
 
@@ -17,6 +20,7 @@ export default function Home() {
       const res = await axios.get('http://localhost:4000/api')
       const data = res.data
       setRestaurants(data)
+      setFiltered(data)
     } catch (error) {
       console.log(error)
     }
@@ -25,6 +29,21 @@ export default function Home() {
 
   const handleClick = (id) => {
     navigate(`/restaurant/${id}`)
+  }
+
+  const handleChange = (e) => {
+    setSearch(e.target.value)
+    if (e.target.value === "") {
+      setFiltered(restaurants)
+    }else{
+      const filter = filtered.filter((each) => each.Name.toLowerCase().includes(e.target.value.toLowerCase()))
+      setFiltered(filter)
+      if (filter.length === 0) {
+        setMessage("No restaurants found")
+      }else{
+        setMessage('')
+      }
+    }
   }
 
   useEffect(() => {
@@ -46,17 +65,17 @@ export default function Home() {
             </select>
             <Icon.GeoAltFill className='icons-home' />
           </div>
-          <input type='search' placeholder='search restaurants and foods here...' className='form-control form-search' />
+          <input type='search' placeholder='search restaurants and foods here...' value={search} className='form-control form-search' onChange={handleChange} />
         </div>
         <div className='d-flex gap-5'>
-          <Icon.Cart height={30} width={30}/>
+          <Link to={'/cart'}><Icon.Cart height={30} width={30}/></Link>
          <Link to={'/profile'} className='text-dark'><Icon.PersonCircle  height={30} width={30}/></Link> 
         </div>
 
 
       </nav>
       <div className='d-flex flex-wrap justify-content-center gap-5 pt-4 pb-4'>
-        {restaurants.map((each) => {
+        {filtered.map((each) => {
           return (
             <div key={each._id} className='restaurant-cards' onClick={() => {handleClick(each._id)}}>
               <img src={each.imageUrl} alt={each.Name} className='image-card' />
@@ -64,6 +83,7 @@ export default function Home() {
             </div>
           )
         })}
+        {message.length > 0 && <h1>{message}</h1>}
       </div>
 
     </div>
