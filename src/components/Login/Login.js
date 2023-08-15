@@ -4,10 +4,14 @@ import { TextField } from '@mui/material'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
+import { useSelector,useDispatch } from 'react-redux'
+import { activeUser } from '../../Action/Action'
 
 export default function Login(props) {
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
 
 
   const [mobile, setMobile] = useState('')
@@ -26,7 +30,9 @@ export default function Login(props) {
         console.log(res)
         const jwt = res.data.token
         Cookies.set('jwt_token', jwt, { expires: 1 })
+        Cookies.set('activeUser',res.data.allData[0]._id)
         navigate('/home', { replace: true })
+
       }
     }).catch((err) => {
       console.log(err.response.data.message)

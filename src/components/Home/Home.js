@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import '../Home/Home.css'
 import * as Icon from 'react-bootstrap-icons'
-import {Link} from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,Link } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
 export default function Home() {
@@ -14,6 +13,7 @@ export default function Home() {
   const [message,setMessage] = useState('')
   
   const navigate = useNavigate()
+  
 
   const fetchData = async () => {
     try {
@@ -36,7 +36,7 @@ export default function Home() {
     if (e.target.value === "") {
       setFiltered(restaurants)
     }else{
-      const filter = filtered.filter((each) => each.Name.toLowerCase().includes(e.target.value.toLowerCase()))
+      const filter = restaurants.filter((each) => each.Name.toLowerCase().includes(e.target.value.toLowerCase()))
       setFiltered(filter)
       if (filter.length === 0) {
         setMessage("No restaurants found")

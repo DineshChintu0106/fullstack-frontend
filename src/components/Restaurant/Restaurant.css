@@ -14,3 +14,9 @@
     width: 100%;
     padding: 10px;
 }
+.button-i{
+    border-radius: 0px 60px 60px 0px;
+}
+.button-d{
+    border-radius: 60px 0px 0px 60px;
+}
