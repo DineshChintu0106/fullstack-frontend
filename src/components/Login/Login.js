@@ -4,13 +4,10 @@ import { TextField } from '@mui/material'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
-import { useSelector,useDispatch } from 'react-redux'
-import { activeUser } from '../../Action/Action'
 
 export default function Login(props) {
 
   const navigate = useNavigate()
-  const dispatch = useDispatch()
 
 
 
