@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './Login.css'
 import { TextField } from '@mui/material'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
@@ -17,7 +17,7 @@ export default function Login(props) {
   const [mobile, setMobile] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -31,7 +31,7 @@ export default function Login(props) {
         const jwt = res.data.token
         setLoading(false)
         Cookies.set('jwt_token', jwt, { expires: 1 })
-        Cookies.set('activeUser',res.data.allData[0]._id,{expires:1})
+        Cookies.set('activeUser', res.data.allData[0]._id, { expires: 1 })
         navigate('/home', { replace: true })
 
       }
@@ -67,7 +67,7 @@ export default function Login(props) {
     else {
       navigate('/home')
     }
-  },[])
+  }, [])
 
 
   return (
@@ -91,6 +91,7 @@ export default function Login(props) {
           setPassword(e.target.value)
         }} />
         {error.length > 0 && <strong className='text text-danger'>{error}</strong>}
+        <div style={{ width: "90%", color: "white" }} className='d-flex justify-content-end'><span>Didn't have an account <Link to={'/register'}>register</Link> here</span></div>
         <button type='submit' className='btn btn-light'>{loading ? <Spin indicator={antIcon} /> : "Login"}</button>
       </form>
     </div>
