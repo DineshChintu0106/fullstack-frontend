@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link,useNavigate } from 'react-router-dom'
 import './Restaurant.css'
 import { v4 } from 'uuid'
 import { Modal } from 'antd';
@@ -13,10 +13,11 @@ export default function Restaurant() {
     const [food, setFood] = useState([])
 
     const params = useParams()
+    const navigate = useNavigate()
 
 
     const fetchdata = () => {
-        axios.get(`http://localhost:4000/fetchDetails/${params.id}`).then((res) => {
+        axios.get(`https://restbook.onrender.com/fetchDetails/${params.id}`).then((res) => {
             setData(res.data[0])
             setFood(res.data[0]["Food items"].map((each) => {
                 return { ...each, quantity: 0 }
@@ -56,7 +57,7 @@ export default function Restaurant() {
     const Success = () => {
         const cart = food.filter((each) => each.quantity > 0)
         const orderCart = cart.map((each) => {
-            return { ...each, orderId: v4(), orderStatus: false }
+            return { ...each, cartId: v4(), activeOrder: false }
         })
         const activeUser = Cookies.get("activeUser")
         console.log(activeUser)
@@ -65,14 +66,17 @@ export default function Restaurant() {
             orders: orderCart
         }
         console.log(orderCart)
-        axios.put('http://localhost:4000/addToCart', data).then((res) => {
+        axios.put('https://restbook.onrender.com/addToCart', data).then((res) => {
             if (res.data === "success") {
                 Modal.success({
-                    content: 'some messages...some messages...',
+                    content: 'Added to cart successfully...',
                     centered: true,
                     okText: "Go to Cart",
                     okType: 'danger',
                     maskClosable: true,
+                    onOk:() => {
+                        navigate('/cart')
+                    }
                 });
             }
         }).catch((err) => {
@@ -82,9 +86,9 @@ export default function Restaurant() {
     };
 
 
-    useEffect(() => {
-        fetchdata()
-    }, [])
+useEffect(() => {
+    fetchdata()
+},[])
 
 
     return (

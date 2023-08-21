@@ -1,0 +1,16 @@
+.profile-card{
+    width: 450px;
+    max-width: 90%;
+    margin: auto;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.border-b{
+    border-bottom: 1px solid lightgray;
+    cursor: pointer;
+}

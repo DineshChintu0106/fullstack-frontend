@@ -36,7 +36,7 @@ export default function Register() {
       city,
       pincode
     }
-    axios.post("http://localhost:4000/register", data).then((res) => {
+    axios.post("https://restbook.onrender.com/register", data).then((res) => {
       setSuccess("Registerd successfully")
     }).then(() => {
       setLoading(false)

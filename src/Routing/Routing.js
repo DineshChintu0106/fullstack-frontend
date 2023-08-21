@@ -6,6 +6,7 @@ import Home from '../components/Home/Home';
 import Profile from '../components/Profile/Profile';
 import Restaurant from '../components/Restaurant/Restaurant';
 import Cart from '../components/Cart/Cart';
+import MyOrders from '../components/MyOrders/MyOrders';
 
 export default function Routing() {
     return (
@@ -18,6 +19,7 @@ export default function Routing() {
                 <Route exact path='/profile' element={<Profile/>}/>
                 <Route exact path='/restaurant/:id' element={<Restaurant/>}/>
                 <Route exact path='/cart' element={<Cart/>}/>
+                <Route exact path='/myorders' element={<MyOrders/>}/>
             </Routes>
         </div>
     )

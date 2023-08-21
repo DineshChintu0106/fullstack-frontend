@@ -21,13 +21,12 @@ export default function Login(props) {
       mobile,
       password
     }
-    axios.post('http://localhost:4000/login', data).then((res) => {
+    axios.post('https://restbook.onrender.com/login', data).then((res) => {
       console.log(res)
-      if (res.statusText === "OK") {
-        console.log(res)
+      if (res.data.token) {
         const jwt = res.data.token
         Cookies.set('jwt_token', jwt, { expires: 1 })
-        Cookies.set('activeUser',res.data.allData[0]._id)
+        Cookies.set('activeUser',res.data.allData[0]._id,{expires:1})
         navigate('/home', { replace: true })
 
       }
