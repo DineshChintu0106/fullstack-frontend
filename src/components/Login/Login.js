@@ -36,7 +36,6 @@ export default function Login(props) {
 
       }
     }).catch((err) => {
-      console.log(err.response.data.message)
       if (err.response.data.message === "No user found") {
         setLoading(false)
         setError(err.response.data.message)

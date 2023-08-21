@@ -26,7 +26,6 @@ export default function Cart() {
 
   const fetchCart = () => {
     const user = Cookies.get("activeUser")
-    console.log(user)
     axios.get(`https://restbook.onrender.com/getCart/${user}`).then((res) => {
       setOrders(res.data.cart)
       setMobile(res.data.mobile)
@@ -51,7 +50,6 @@ export default function Cart() {
       cartId: id
     }
     axios.post('https://restbook.onrender.com/deleteitem', data).then((res) => {
-      console.log(res)
       fetchCart()
       setLoading(false)
     })

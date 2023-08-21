@@ -12,7 +12,6 @@ export default function Profile() {
   const fetchDetails = () => {
     const user = Cookies.get("activeUser")
     axios.get(`https://restbook.onrender.com/getProfile/${user}`).then((res) => {
-      console.log(res)
       setUser(res.data)
       setAddress(res.data.address)
     }).catch((err) => {

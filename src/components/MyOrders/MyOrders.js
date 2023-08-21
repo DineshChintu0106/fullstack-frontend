@@ -14,7 +14,6 @@ export default function MyOrders() {
   const fetchOrders = () => {
     const user = Cookies.get("activeUser")
     axios.get(`https://restbook.onrender.com/getplaceorder/${user}`).then((res) => {
-      console.log(res)
       setData(res.data)
       setLoading(false)
     })
