@@ -1,6 +1,6 @@
 .dropdown-home {
     position: relative;
-    width: 15%;
+    width: 300px;
 }
 
 .navbar-top {
@@ -19,7 +19,7 @@
 }
 
 .form-search {
-    width: 30%;
+    width: 300px;
 }
 
 .restaurant-cards {

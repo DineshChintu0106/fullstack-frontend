@@ -6,6 +6,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import * as Icon from 'react-bootstrap-icons'
 import { v4 } from 'uuid'
 import { Modal } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 
 export default function Cart() {
 
@@ -14,6 +16,7 @@ export default function Cart() {
   const [address, setAddress] = useState({})
   const [mobile, setMobile] = useState('')
   const [payment, setPayment] = useState('')
+  const [loading, setLoading] = useState(true)
 
   const navigate = useNavigate()
 
@@ -21,8 +24,8 @@ export default function Cart() {
   const deliveryCharges = 50
 
 
-  const fetchCart = async () => {
-    const user = await Cookies.get("activeUser")
+  const fetchCart = () => {
+    const user = Cookies.get("activeUser")
     console.log(user)
     axios.get(`https://restbook.onrender.com/getCart/${user}`).then((res) => {
       setOrders(res.data.cart)
@@ -34,12 +37,14 @@ export default function Cart() {
       })
       sum = sum + deliveryCharges + (sum * gst / 100)
       setTotalCost(sum)
+      setLoading(false)
     }).catch((err) => {
       console.log(err)
     })
   }
 
   const handleDelete = (id) => {
+    setLoading(true)
     const user = Cookies.get("activeUser")
     const data = {
       id: user,
@@ -48,6 +53,7 @@ export default function Cart() {
     axios.post('https://restbook.onrender.com/deleteitem', data).then((res) => {
       console.log(res)
       fetchCart()
+      setLoading(false)
     })
   }
 
@@ -68,7 +74,6 @@ export default function Cart() {
       mobile: mobile
     }
     axios.post("https://restbook.onrender.com/placeorder", data).then((res) => {
-      console.log(res)
       if (res.status === 200) {
         Modal.success({
           content: 'Placed Order successfully...',
@@ -86,6 +91,15 @@ export default function Cart() {
     })
   }
 
+  const antIcon = (
+    <LoadingOutlined
+      style={{
+        fontSize: 40,
+      }}
+      spin
+    />
+  );
+
   useEffect(() => {
     fetchCart()
   }, [])
@@ -98,8 +112,7 @@ export default function Cart() {
           <h1>Cart</h1>
           <div></div>
         </div>
-
-        {orders.length > 0 ? <div>
+        {loading ? <div className='d-flex align-items-center justify-content-center' style={{ height: "80vh" }}> <Spin indicator={antIcon} /></div> : <div>{orders.length > 0 ? <div>
           <div className='d-flex flex-wrap justify-content-center align-items-center gap-4'>
 
             {orders.map((each) => {
@@ -126,50 +139,56 @@ export default function Cart() {
             })}
           </div>
           <div className='bill-section'>
-            <table>
-              <thead>
-                <tr style={{ borderBottom: "1px solid black" }}>
-                  <th>Items</th>
-                  <th>Cost</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders.map((each) => {
-                  return <tr key={each.cartId} style={{ borderBottom: "1px solid black" }}>
-                    <td>{each.item} x{each.quantity}</td>
-                    <td>{each.cost * each.quantity}</td>
+            <div style={{ width: "90%" }}>
+              <table className="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Items</th>
+                    <th>Cost</th>
                   </tr>
-                })}
-                <tr style={{ borderBottom: "1px solid black" }}>
-                  <td>Delivery charges</td>
-                  <td>{deliveryCharges}</td>
-                </tr>
-                <tr style={{ borderBottom: "1px solid black" }}>
-                  <td>GST</td>
-                  <td>{gst}%</td>
-                </tr>
-                <tr>
-                  <td><strong>Total</strong></td>
-                  <td>{totalCost}</td>
-                </tr>
+                </thead>
+                <tbody>
+                  {orders.map((each) => {
+                    return <tr key={each.cartId}>
+                      <td>{each.item} x{each.quantity}</td>
+                      <td>{each.cost * each.quantity}</td>
+                    </tr>
+                  })}
+                  <tr>
+                    <td>Delivery charges</td>
+                    <td>{deliveryCharges}</td>
+                  </tr>
+                  <tr>
+                    <td>GST</td>
+                    <td>{gst}%</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Total</strong></td>
+                    <td>{totalCost}</td>
+                  </tr>
 
-              </tbody>
-            </table>
+                </tbody>
+              </table>
+            </div>
           </div>
           <div>
             <h1>Payment</h1>
-            <div className='d-flex align-items-center justify-content-center gap-2'>
-              <input type='radio' name='payment' id='cod' value={"Cash on delivery"} onClick={(e) => { setPayment(e.target.value) }} />
-              <label className='d-flex align-items-center gap-2' htmlFor='cod'><Icon.Cash /><span>Cash on delivery</span></label>
-            </div>
-            <div className='d-flex align-items-center justify-content-center gap-2'>
-              <input type='radio' name='payment' id='phonepe' value={"Phonepe"} onClick={(e) => { setPayment(e.target.value) }} />
-              <label className='d-flex align-items-center gap-2' htmlFor='phonepe'><Icon.Phone /><span>PhonePe</span></label>
+            <div className='payment-card'>
+              <div className="form-check d-flex align-items-center gap-4">
+                <input className="form-check-input" type="radio" name="payment" id="cod" value={"Cash on delivery"} onClick={(e) => { setPayment(e.target.value) }} />
+                <label className='d-flex align-items-center gap-3' htmlFor='cod'>
+                  <Icon.Cash width={40} height={30} /><span style={{ fontSize: "20px" }}>Cash on delivery</span>
+                </label>
+              </div>
+              <div className="form-check d-flex gap-4">
+                <input className="form-check-input" type="radio" name='payment' id='phonepe' value={"Phonepe"} onClick={(e) => { setPayment(e.target.value) }} />
+                <label className='d-flex align-items-center gap-3' htmlFor='phonepe'><Icon.Phone width={40} height={30} /><span style={{ fontSize: "20px" }}>PhonePe</span></label>
+              </div>
             </div>
           </div>
           <div className='footer-button'>
             <div className='d-flex justify-content-around' style={{ borderBottom: "1px solid lightGrey" }}>
-              <p>Address: {address.doorNo},{address.street},{address.mandal},{address.city}-{address.pincode}</p>
+              <p><b>Address: </b>{address.doorNo},{address.street},{address.mandal},{address.city}-{address.pincode}</p>
               <p className='text-danger'>Change</p>
             </div>
             <div className='d-flex justify-content-around p-2'>
@@ -178,6 +197,8 @@ export default function Cart() {
             </div>
           </div>
         </div> : <h1>no items in the cart</h1>}
+        </div>}
+
 
 
       </div>

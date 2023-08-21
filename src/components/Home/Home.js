@@ -4,6 +4,9 @@ import '../Home/Home.css'
 import * as Icon from 'react-bootstrap-icons'
 import { useNavigate, Link } from 'react-router-dom'
 import Cookies from 'js-cookie'
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
+
 
 export default function Home() {
 
@@ -11,6 +14,7 @@ export default function Home() {
   const [filtered, setFiltered] = useState(restaurants)
   const [search, setSearch] = useState('')
   const [message, setMessage] = useState('')
+  const [loading, setLoading] = useState(true)
 
   const navigate = useNavigate()
 
@@ -21,6 +25,7 @@ export default function Home() {
       const data = res.data
       setRestaurants(data)
       setFiltered(data)
+      setLoading(false)
     } catch (error) {
       console.log(error)
     }
@@ -46,6 +51,15 @@ export default function Home() {
     }
   }
 
+  const antIcon = (
+    <LoadingOutlined
+      style={{
+        fontSize: 40,
+      }}
+      spin
+    />
+  );
+
   useEffect(() => {
     fetchData()
     const token = Cookies.get("jwt_token")
@@ -55,60 +69,40 @@ export default function Home() {
   }, [])
 
   return (
-    <div>
-      <nav className='d-flex justify-content-between align-items-center navbar-top'>
-        <div className='d-flex justify-content-center align-items-center gap-2 ' style={{ width: '100%' }}>
+    <>
+      <nav className='d-flex align-items-center navbar-top'>
+        <div className='d-flex justify-content-around flex-wrap align-items-center gap-2 ' style={{ width: '100%' }}>
           <strong className='text-small'>Restaurants Bookings</strong>
-          <div className=' dropdown-home'>
+          <div className='dropdown-home'>
             <select className='form-control'>
               <option value={"visakhapatnam"}>Visakhapatnam</option>
             </select>
             <Icon.GeoAltFill className='icons-home' />
           </div>
-          <input type='search' placeholder='search restaurants and foods here...' value={search} className='form-control form-search' onChange={handleChange} />
-        </div>
-        <div className='d-flex gap-5'>
-          <Link to={'/cart'}><Icon.Cart height={30} width={30}/></Link>
-         <Link to={'/profile'} className='text-dark'><Icon.PersonCircle  height={30} width={30}/></Link> 
+          <input type='search' placeholder='search restaurants and foods here...' value={search} className='form-search form-control' onChange={handleChange} />
+          <div className='d-flex gap-5'>
+            <Link to={'/myorders'} style={{ textDecoration: "none", color: "black", fontWeight: "bold" }}>Myorders</Link>
+            <Link to={'/cart'}><Icon.Cart height={30} width={30} /></Link>
+            <Link to={'/profile'} className='text-dark'><Icon.PersonCircle height={30} width={30} /></Link>
+          </div>
         </div>
       </nav>
-      {/* <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{width:"100%"}}>
-        <a className="navbar-brand" href="#">Navbar</a>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-
-        <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-          <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li className="nav-item active">
-              <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Link</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link disabled" href="#">Disabled</a>
-            </li>
-          </ul>
-          <form className="form-inline my-2 my-lg-0">
-            <input className="form-control mr-sm-2" type="search" placeholder="Search" />
-            <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
-        </div>
-      </nav> */}
-      <div className='d-flex flex-wrap justify-content-center gap-5 pt-4 pb-4'>
-        <nav className="navbar navbar-light"></nav>
-        {filtered.map((each) => {
-          return (
-            <div key={each._id} className='restaurant-cards' onClick={() => { handleClick(each._id) }}>
-              <img src={each.imageUrl} alt={each.Name} className='image-card' />
-              <h5>{each.Name}</h5>
-            </div>
-          )
-        })}
-        {message.length > 0 && <h1>{message}</h1>}
+      <div className='d-flex justify-content-center align-items-center'>
+        {loading ? <div className='d-flex align-items-center' style={{height:"80vh"}}> <Spin indicator={antIcon} /></div> : <div className='d-flex flex-wrap justify-content-center gap-5 pt-4 pb-4'>
+          {filtered.map((each) => {
+            return (
+              <div key={each._id} className='restaurant-cards' onClick={() => { handleClick(each._id) }}>
+                <img src={each.imageUrl} alt={each.Name} className='image-card' />
+                <h5>{each.Name}</h5>
+              </div>
+            )
+          })}
+          {message.length > 0 && <h1>{message}</h1>}
+        </div>}
       </div>
 
-    </div>
+
+
+    </>
   )
 }
